@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"github.com/ZoeKyHein/go-gin-example/pkg/setting"
 	v1 "github.com/ZoeKyHein/go-gin-example/routers/api/v1"
 	"github.com/gin-gonic/gin"
 )
@@ -10,6 +11,7 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+	gin.SetMode(setting.RunMode)
 
 	tag := r.Group("/api/v1/tag")
 	{
