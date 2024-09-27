@@ -1,5 +1,10 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+	"time"
+)
+
 // Tag 标签模型
 type Tag struct {
 	Model // 继承模型
@@ -8,6 +13,16 @@ type Tag struct {
 	State      int    `json:"state"`       // 标签状态
 	CreatedBy  string `json:"created_by"`  // 创建人
 	ModifiedBy string `json:"modified_by"` // 更新人
+}
+
+// BeforeCreate 创建前models callback
+func (tag *Tag) BeforeCreate(scope *gorm.Scope) (err error) {
+	return scope.SetColumn("CreatedOn", time.Now().Unix())
+}
+
+// BeforeUpdate 更新前models callback
+func (tag *Tag) BeforeUpdate(scope *gorm.Scope) (err error) {
+	return scope.SetColumn("ModifiedOn", time.Now().Unix())
 }
 
 // GetTags 获取标签列表
@@ -24,16 +39,6 @@ func GetTagTotal(maps interface{}) (count int) {
 	return
 }
 
-// ExistTagByName 根据名称判断标签是否存在
-func ExistTagByName(name string) bool {
-	var tag Tag
-	db.Select("id").Where("name = ?", name).First(&tag)
-	if tag.ID > 0 {
-		return true
-	}
-	return false
-}
-
 // AddTag 添加标签
 func AddTag(name string, state int, createdBy string) error {
 	return db.Create(&Tag{
@@ -41,4 +46,14 @@ func AddTag(name string, state int, createdBy string) error {
 		State:     state,
 		CreatedBy: createdBy,
 	}).Error
+}
+
+// EditTag 编辑标签
+func EditTag(id int, data interface{}) error {
+	return db.Model(&Tag{}).Where("id = ?", id).Updates(data).Error
+}
+
+// DeleteTag 删除标签
+func DeleteTag(id int) error {
+	return db.Where("id = ?", id).Delete(&Tag{}).Error
 }
