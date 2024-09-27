@@ -4,10 +4,10 @@ package models
 type Tag struct {
 	Model // 继承模型
 
-	Name      string `json:"name"`       // 标签名称
-	State     int    `json:"state"`      // 标签状态
-	CreatedBy string `json:"created_by"` // 创建人
-	UpdatedBy string `json:"updated_by"` // 更新人
+	Name       string `json:"name"`        // 标签名称
+	State      int    `json:"state"`       // 标签状态
+	CreatedBy  string `json:"created_by"`  // 创建人
+	ModifiedBy string `json:"modified_by"` // 更新人
 }
 
 // GetTags 获取标签列表

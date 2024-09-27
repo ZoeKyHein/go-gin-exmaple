@@ -13,7 +13,6 @@ import (
 
 // AddTag 添加标签
 func AddTag(c *gin.Context) {
-	// todo 待实现
 	name := c.Query("name") // 获取参数
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
 	createdBy := c.Query("created_by")
@@ -32,7 +31,10 @@ func AddTag(c *gin.Context) {
 			code = e.ERROR_EXIST_TAG
 		} else {
 			code = e.SUCCESS
-			models.AddTag(name, state, createdBy)
+			err := models.AddTag(name, state, createdBy)
+			if err != nil {
+				code = e.ERROR
+			}
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{
