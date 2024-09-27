@@ -20,5 +20,13 @@ func InitRouter() *gin.Engine {
 		tag.DELETE("/tags/:id", v1.DeleteTag) // DeleteTag 删除标签
 		tag.GET("/tags", v1.GetTags)          // GetTags 获取多个标签
 	}
+
+	article := r.Group("/api/v1")
+	{
+		article.POST("/articles", v1.AddArticle)          // AddArticle 添加文章
+		article.PUT("/articles/:id", v1.EditArticle)      // EditArticle 编辑文章
+		article.DELETE("/articles/:id", v1.DeleteArticle) // DeleteArticle 删除文章
+		article.GET("/articles", v1.GetArticles)          // GetArticles 获取多个文章
+	}
 	return r
 }

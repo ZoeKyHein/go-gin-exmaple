@@ -1,10 +1,5 @@
 package models
 
-import (
-	"github.com/jinzhu/gorm"
-	"time"
-)
-
 // Tag 标签模型
 type Tag struct {
 	Model // 继承模型
@@ -13,16 +8,6 @@ type Tag struct {
 	State      int    `json:"state"`       // 标签状态
 	CreatedBy  string `json:"created_by"`  // 创建人
 	ModifiedBy string `json:"modified_by"` // 更新人
-}
-
-// BeforeCreate 创建前models callback
-func (tag *Tag) BeforeCreate(scope *gorm.Scope) (err error) {
-	return scope.SetColumn("CreatedOn", time.Now().Unix())
-}
-
-// BeforeUpdate 更新前models callback
-func (tag *Tag) BeforeUpdate(scope *gorm.Scope) (err error) {
-	return scope.SetColumn("ModifiedOn", time.Now().Unix())
 }
 
 // GetTags 获取标签列表
