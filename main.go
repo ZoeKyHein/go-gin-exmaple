@@ -17,8 +17,8 @@ func main() {
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
 		Handler:        router,
-		ReadTimeout:    10,
-		WriteTimeout:   10,
+		ReadTimeout:    setting.ReadTimeout,
+		WriteTimeout:   setting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 	s.ListenAndServe()

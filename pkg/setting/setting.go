@@ -20,7 +20,14 @@ var (
 
 // 初始化配置
 func init() {
-
+	var err error
+	Cfg, err = ini.Load("conf/app.ini")
+	if err != nil {
+		panic("Fail to parse 'conf/app.ini': " + err.Error())
+	}
+	loadBase()
+	loadServer()
+	loadApp()
 }
 
 // 加载基本配置
