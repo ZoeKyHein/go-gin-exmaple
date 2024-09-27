@@ -13,12 +13,12 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	gin.SetMode(setting.RunMode)
 
-	tag := r.Group("/api/v1/tag")
+	tag := r.Group("/api/v1")
 	{
-		tag.POST("/add", v1.AddTag)             // AddTag 添加标签
-		tag.PUT("/edit/:id", v1.EditTag)        // EditTag 编辑标签
-		tag.DELETE("/delete/:id", v1.DeleteTag) // DeleteTag 删除标签
-		tag.GET("/tags", v1.GetTags)            // GetTags 获取多个标签
+		tag.POST("/tags", v1.AddTag)          // AddTag 添加标签
+		tag.PUT("/tags/:id", v1.EditTag)      // EditTag 编辑标签
+		tag.DELETE("/tags/:id", v1.DeleteTag) // DeleteTag 删除标签
+		tag.GET("/tags", v1.GetTags)          // GetTags 获取多个标签
 	}
 	return r
 }
